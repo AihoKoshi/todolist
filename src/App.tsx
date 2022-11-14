@@ -4,6 +4,7 @@ import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 
 function App() {
+
     let tasks1: TaskType[] = [
         {id: v1(), title: 'CSS', isDone: false},
         {id: v1(), title: 'JS', isDone: true},

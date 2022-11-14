@@ -12,6 +12,7 @@ export type TodolistPropsType = {
 }
 
 export const Todolist = (props: TodolistPropsType) => {
+
     return (
         <div>
             <h3>{props.title}</h3>
@@ -40,4 +41,4 @@ export const Todolist = (props: TodolistPropsType) => {
             </div>
         </div>
     );
-}
+};
