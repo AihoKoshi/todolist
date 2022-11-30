@@ -1,4 +1,5 @@
 import React from 'react';
+import {FilterValuesType} from './App';
 
 export type TaskType = {
     id: string
@@ -7,37 +8,48 @@ export type TaskType = {
 }
 
 export type TodolistPropsType = {
-    title: string
+    todoListTitle: string
     tasks: TaskType[]
+    removeTask: (taskID: string) => void
+    changeTodoListFilter: (filterValue: FilterValuesType) => void
 }
 
 export const Todolist = (props: TodolistPropsType) => {
-
+    // вариант с функцией. При этом варианте мапим в разметке ниже
+    // (<ul>{props.tasks.map((task: TaskType)}</ul>)
+    // const getTaskItem = (task: TaskType) => {
+    //     return (
+    //         <li key={task.id}>
+    //             <input type="checkbox" checked={task.isDone}/>
+    //             <span>{task.title}</span>
+    //             <button onClick={() => props.removeTask(task.id)}>x</button>
+    //         </li>
+    //     )
+    // }
+    // вариант с переменной. При этом варианте мапим для переменной,
+    // а в разметку отправляем переменную (<ul>{tasksListItem}</ul>)
+    const tasksListItem = props.tasks.map((task: TaskType) => {
+        return (
+            <li key={task.id}>
+                <input type="checkbox" checked={task.isDone}/>
+                <span>{task.title}</span>
+                <button onClick={() => props.removeTask(task.id)}>x</button>
+            </li>
+        )
+    })
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.todoListTitle}</h3>
             <div>
                 <input/>
                 <button>+</button>
             </div>
-            <ul>
-                <li>
-                    <input type="checkbox" checked={props.tasks[0].isDone}/>
-                    <span>{props.tasks[0].title}</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={props.tasks[1].isDone}/>
-                    <span>{props.tasks[1].title}</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={props.tasks[2].isDone}/>
-                    <span>{props.tasks[2].title}</span>
-                </li>
-            </ul>
+            <ul>{tasksListItem}</ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={()=>props.changeTodoListFilter('all')}
+                >All</button>
+                <button onClick={()=>props.changeTodoListFilter('active')}>Active</button>
+                <button onClick={()=>props.changeTodoListFilter('completed')}>Completed</button>
             </div>
         </div>
     );
