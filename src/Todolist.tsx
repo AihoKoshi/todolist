@@ -27,16 +27,17 @@ export const Todolist = (props: TodolistPropsType) => {
     //     )
     // }
     // вариант с переменной. При этом варианте мапим для переменной,
-    // а в разметку отправляем переменную (<ul>{tasksListItem}</ul>)
-    const tasksListItem = props.tasks.map((task: TaskType) => {
-        return (
-            <li key={task.id}>
-                <input type="checkbox" checked={task.isDone}/>
-                <span>{task.title}</span>
-                <button onClick={() => props.removeTask(task.id)}>x</button>
-            </li>
-        )
-    })
+    // а в разметку отправляем переменную (<ul>{tasksItems}</ul>)
+    const tasksItems = props.tasks.length
+        ? props.tasks.map((task: TaskType) => {
+            return (
+                <li key={task.id}>
+                    <input type="checkbox" checked={task.isDone}/>
+                    <span>{task.title}</span>
+                    <button onClick={() => props.removeTask(task.id)}>x</button>
+                </li>
+            )
+        }) : <span>Task list is empty</span>
     return (
         <div>
             <h3>{props.todoListTitle}</h3>
@@ -44,12 +45,13 @@ export const Todolist = (props: TodolistPropsType) => {
                 <input/>
                 <button>+</button>
             </div>
-            <ul>{tasksListItem}</ul>
+            <ul>{tasksItems}</ul>
             <div>
-                <button onClick={()=>props.changeTodoListFilter('all')}
-                >All</button>
-                <button onClick={()=>props.changeTodoListFilter('active')}>Active</button>
-                <button onClick={()=>props.changeTodoListFilter('completed')}>Completed</button>
+                <button onClick={() => props.changeTodoListFilter('all')}
+                >All
+                </button>
+                <button onClick={() => props.changeTodoListFilter('active')}>Active</button>
+                <button onClick={() => props.changeTodoListFilter('completed')}>Completed</button>
             </div>
         </div>
     );
