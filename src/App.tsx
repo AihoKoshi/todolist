@@ -22,14 +22,17 @@ function App() {
     //     console.log(tasks)  // если tasks изменится, то выведи ее в консоль.
     // },[tasks])
 
+    const addTask = (title: string) => {
+        const newTask: TaskType = {id: v1(), title: title, isDone: false}
+        setTasks([newTask, ...tasks])
+    }
+
     const [filter, setFilter] = useState<FilterValuesType>('all')
     const changeTodoListFilter = (filterValue: FilterValuesType) => {
         setFilter(filterValue)
     }
-
     const getFilteredTasksForRender = () => {
-
-        switch(filter){
+        switch (filter) {
             case 'active':
                 return tasks.filter(t => !t.isDone)
             case 'completed':
@@ -46,7 +49,8 @@ function App() {
                 todoListTitle={todoListTitle}
                 tasks={filteredTasksForRender}
                 removeTask={removeTask}
-                changeTodoListFilter = {changeTodoListFilter}
+                addTask={addTask}
+                changeTodoListFilter={changeTodoListFilter}
             />
         </div>
     );
